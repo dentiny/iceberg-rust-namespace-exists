@@ -1,0 +1,17 @@
+services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/rust:latest
+    volumes:
+      - ..:/workspaces/iceberg-rust-namespace-exists:cached
+    network_mode: service:postgres
+    command: sleep infinity
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    command: ["-c", "wal_level=logical"]
+
+  iceberg:
+    image: tabulario/iceberg-rest:latest
+    network_mode: service:postgres
