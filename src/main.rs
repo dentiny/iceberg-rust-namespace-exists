@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use iceberg::Catalog;
 use iceberg::Result as IcebergResult;
 use iceberg::NamespaceIdent;
@@ -18,6 +20,9 @@ async fn main() -> IcebergResult<()> {
         NamespaceIdent::from_vec(namespace.iter().map(|s| s.to_string()).collect())?;
     println!("NamespaceIdent: {:?}", namespace_ident);
 
+    // --- Create namespace ---
+    let _ = catalog.create_namespace(&namespace_ident, HashMap::new()).await?;
+
     // --- List all namespaces ---
     let namespaces = catalog.list_namespaces(None).await?;
     println!("Existing namespaces:");
@@ -32,6 +37,10 @@ async fn main() -> IcebergResult<()> {
     } else {
         println!("Namespace {:?} does NOT exist!", namespace_ident);
     }
+
+    // -- Get namespace ---
+    let namespace_instance = catalog.get_namespace(&namespace_ident).await?;
+    println!("Namespace = {:?}", namespace_instance); 
 
     // --- Check if namespace exists ---
     let namespace_exists = catalog.namespace_exists(&namespace_ident).await?;
