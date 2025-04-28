@@ -1,0 +1,9 @@
+[package]
+name = "iceberg-rust-namespace-exists"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+iceberg = { git = "https://github.com/apache/iceberg-rust.git", rev = "7a5ad1fcaf00d4638857812bab788105f6c60573"}
+iceberg-catalog-rest = { git = "https://github.com/apache/iceberg-rust.git", rev = "7a5ad1fcaf00d4638857812bab788105f6c60573" }
+tokio = { version = "1.38", features = ["macros", "sync", "time"] }
